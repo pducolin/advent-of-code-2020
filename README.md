@@ -1,6 +1,8 @@
 # Advent of Code 2020
 Solutions to Advent of Code 2020
 
+![Christmas image of a cup of hot chocolate](./image.png)
+
 I'm using this project to play with Python, [TDD](##TDD) and [Github Actions](##Github-Actions)
 
 ## TDD
