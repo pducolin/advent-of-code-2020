@@ -27,8 +27,10 @@ hgt:59cm ecl:zzz
 eyr:2038 hcl:74454a iyr:2023
 pid:3556412378 byr:2007"""
 
+
 def test_solution_valid():
-  assert solution(EXAMPLE_VALID) == 4
+    assert solution(EXAMPLE_VALID) == 4
+
 
 def test_solution_invalid():
-  assert solution(EXAMPLE_INVALID) == 0
+    assert solution(EXAMPLE_INVALID) == 0

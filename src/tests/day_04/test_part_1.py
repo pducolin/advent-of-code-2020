@@ -15,5 +15,6 @@ hgt:179cm
 hcl:#cfa07d eyr:2025 pid:166559648
 iyr:2011 ecl:brn hgt:59in"""
 
+
 def test_solution():
-  assert solution(EXAMPLE) == 2
+    assert solution(EXAMPLE) == 2
