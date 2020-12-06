@@ -1,14 +1,16 @@
-def solution():
-  with open('input.txt') as f:
-    groups = [x for x in f.read().split('\n\n')]
+from src.common import load_input
+
+
+def solution(data):
+    groups = [x for x in data.split('\n\n')]
     counter = 0
     for group in groups:
-      answers = set()
-      for answer in ''.join(group.split('\n')):
-        answers.add(answer)
-      counter += len(answers)
-    print('🎉 Result is {}'.format(counter))
-    
+        answers = set()
+        for answer in ''.join(group.split('\n')):
+            answers.add(answer)
+        counter += len(answers)
+    return counter
+
 
 if __name__ == "__main__":
-  solution()
+    print('🎉 Result is {}'.format(solution(load_input('input.txt'))))
