@@ -1,3 +1,4 @@
+import itertools
 import re
 
 
@@ -54,20 +55,15 @@ def is_valid_passport(passport):
 
 def solution():
   with open('input.txt') as f:
-    rows = [x for x in f.read().split('\n')] 
-    passport = {}
+    groups = [x for x in f.read().split('\n\n')] 
     counter = 0
-    for i in range(len(rows)):
-      row = rows[i]
-      if row:
-        for element in row.split(' '):
-          [field, value] = element.split(':')
-          passport[field] = value
-      if not row or i == len(rows) - 1:
-        if is_valid_passport(passport):
+    for group in groups:
+      passport = {}
+      for element in itertools.chain.from_iterable([x.split(' ') for x in group.split('\n')]):
+        [field, value] = element.split(':')
+        passport[field] = value
+      if is_valid_passport(passport):
           counter += 1
-        passport.clear()
-        continue
   print('🎉 Result is {}'.format(counter))
 
 if __name__ == "__main__":
