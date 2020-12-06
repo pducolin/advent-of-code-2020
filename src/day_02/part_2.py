@@ -1,16 +1,19 @@
-def solution():
+from src.common import load_input
+
+
+def solution(data):
     counter = 0
-    with open('input.txt') as f:
-        lines = [x for x in f.read().split('\n')]
-        for line in lines:
-            rule, password = line.split(':')
-            indexes, letter = rule.split()
-            index_a, index_b = [int(x) for x in indexes.split('-')]
-            letters_at_indexes = password[index_a] + password[index_b]
-            if letters_at_indexes.count(letter) == 1:
-                counter += 1
-    print('🎉 Result is {}'.format(counter))
+    lines = [x for x in data.split('\n')]
+    for line in lines:
+        rule, password = line.split(':')
+        indexes, letter = rule.split()
+        index_a, index_b = [int(x) for x in indexes.split('-')]
+        letters_at_indexes = password[index_a] + password[index_b]
+        if letters_at_indexes.count(letter) == 1:
+            counter += 1
+    return counter
 
 
 if __name__ == "__main__":
-    solution()
+    data = load_input('input.txt')
+    print('🎉 Result is {}'.format(solution(data)))
