@@ -53,18 +53,18 @@ def is_valid_passport(passport):
   
   return True
 
-def solution():
-  with open('input.txt') as f:
-    groups = [x for x in f.read().split('\n\n')] 
-    counter = 0
-    for group in groups:
-      passport = {}
-      for element in itertools.chain.from_iterable([x.split(' ') for x in group.split('\n')]):
-        [field, value] = element.split(':')
-        passport[field] = value
-      if is_valid_passport(passport):
-          counter += 1
-  print('🎉 Result is {}'.format(counter))
+def solution(data):
+  groups = [x for x in data.split('\n\n')] 
+  counter = 0
+  for group in groups:
+    passport = {}
+    for element in [x for x in group.replace('\n', ' ').split(' ')]:
+      [field, value] = element.split(':')
+      passport[field] = value
+    if is_valid_passport(passport):
+        counter += 1
+  return counter
 
 if __name__ == "__main__":
-  solution()
+  with open('input.txt') as f:
+    print('🎉 Result is {}'.format(solution(f.read())))
