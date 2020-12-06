@@ -1,4 +1,4 @@
-from .code import solution
+from src.day_04.part_1 import solution
 
 EXAMPLE = """
 ecl:gry pid:860033327 eyr:2020 hcl:#fffffd

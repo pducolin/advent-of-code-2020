@@ -1,4 +1,4 @@
-from .code import solution
+from src.day_04.part_2 import solution
 
 EXAMPLE_VALID = """pid:087499704 hgt:74in ecl:grn iyr:2012 eyr:2030 byr:1980
 hcl:#623a2f

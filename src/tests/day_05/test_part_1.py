@@ -1,6 +1,6 @@
 import pytest
 
-from .code import parse_column, parse_id, parse_row
+from src.day_05.part_1 import parse_column, parse_id, parse_row
 
 EXAMPLES = [
   {
