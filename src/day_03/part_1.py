@@ -1,5 +1,7 @@
 from collections import namedtuple
 
+from src.common import load_input
+
 Point = namedtuple("Point", ["x", "y"])
 
 
@@ -13,19 +15,19 @@ def next_cell(map_length, current_point):
 TREE = '#'
 
 
-def solution():
+def solution(data):
     trees_counter = 0
-    with open('input.txt') as f:
-        rows = [x for x in f.read().split('\n')]
-        map_length = len(rows[0])
-        map_height = len(rows)
-        current_point = Point(0, 0)
-        while current_point.y < map_height:
-            if rows[current_point.y][current_point.x] == TREE:
-                trees_counter += 1
-            current_point = next_cell(map_length, current_point)
-    print('🎉 Result is {}'.format(trees_counter))
+    rows = [x for x in data.split('\n')]
+    map_length = len(rows[0])
+    map_height = len(rows)
+    current_point = Point(0, 0)
+    while current_point.y < map_height:
+        if rows[current_point.y][current_point.x] == TREE:
+            trees_counter += 1
+        current_point = next_cell(map_length, current_point)
+    return trees_counter
 
 
 if __name__ == "__main__":
-    solution()
+    data = load_input('input.txt')
+    print('🎉 Result is {}'.format(solution(data)))

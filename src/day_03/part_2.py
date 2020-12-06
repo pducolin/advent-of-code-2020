@@ -1,6 +1,8 @@
 from collections import namedtuple
 from functools import reduce
 
+from src.common import load_input
+
 Point = namedtuple("Point", ["x", "y"])
 
 
@@ -21,21 +23,21 @@ TREE = '#'
 PATHS = [(1, 1), (3, 1), (5, 1), (7, 1), (1, 2)]
 
 
-def solution():
+def solution(data):
     trees_counter = [0 for x in range(len(PATHS))]
-    with open('input.txt') as f:
-        rows = [x for x in f.read().split('\n')]
-        map_length = len(rows[0])
-        map_height = len(rows)
-        for i in range(len(PATHS)):
-            to_the_right, to_the_bottom = PATHS[i]
-            current_point = Point(0, 0)
-            while current_point.y < map_height:
-                if rows[current_point.y][current_point.x] == TREE:
-                    trees_counter[i] += 1
-                current_point = next_cell(map_length, current_point, to_the_right, to_the_bottom)
-    print('🎉 Result is {}'.format(reduce((lambda x, y: x * y), trees_counter)))
+    rows = [x for x in data.split('\n')]
+    map_length = len(rows[0])
+    map_height = len(rows)
+    for i in range(len(PATHS)):
+        to_the_right, to_the_bottom = PATHS[i]
+        current_point = Point(0, 0)
+        while current_point.y < map_height:
+            if rows[current_point.y][current_point.x] == TREE:
+                trees_counter[i] += 1
+            current_point = next_cell(map_length, current_point, to_the_right, to_the_bottom)
+    return reduce((lambda x, y: x * y), trees_counter)
 
 
 if __name__ == "__main__":
-    solution()
+    data = load_input('input.txt')
+    print('🎉 Result is {}'.format(solution(data)))

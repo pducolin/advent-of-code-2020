@@ -1,3 +1,5 @@
+from src.common import load_input
+
 VALID_PASSPORT_FIELDS = set(
     """byr
 iyr
@@ -26,5 +28,5 @@ def solution(data):
 
 
 if __name__ == "__main__":
-    with open('input.txt') as f:
-        print('🎉 Result is {}'.format(solution(f.read())))
+    data = load_input('input.txt')
+    print('🎉 Result is {}'.format(solution(data)))

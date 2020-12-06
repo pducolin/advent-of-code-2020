@@ -1,5 +1,7 @@
 import re
 
+from src.common import load_input
+
 
 def is_valid_height(value):
     unit = value[-2:]
@@ -78,5 +80,5 @@ def solution(data):
 
 
 if __name__ == "__main__":
-    with open('input.txt') as f:
-        print('🎉 Result is {}'.format(solution(f.read())))
+    data = load_input('input.txt')
+    print('🎉 Result is {}'.format(solution(data)))
