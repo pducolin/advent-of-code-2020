@@ -5,7 +5,7 @@ Solutions to Advent of Code 2020
 
 I'm using this project to play with Python, [TDD](##TDD) and [Github Actions](##Github-Actions)
 
-## TDD
+## Testing
 
 [pytest](https://docs.pytest.org/en/stable/) is testing library for Python. It is widely used and has some advantages compared to the built-in `unitest` (here's a [comparison between pytest and unittest](https://github.com/renzon/pytest-vs-unittest)).
 
