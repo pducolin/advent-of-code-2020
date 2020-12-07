@@ -4,8 +4,10 @@ import re
 def parse_rules(data):
     rules = {}
     raw_rules = [x for x in data.split('\n')]
-    pattern_parent = r'(\w* \w*) bags contain '
-    pattern_child = r'(\d+){1} (\w* \w*) (bags|bag)\.?'
+    # pattern_parent: (group 1: 2 words separated by a space) bags contain
+    pattern_parent = r'(\w+ \w+) bags contain '
+    # pattern_child: (group 1: 1 number) (group 2: 2 words) (group 3: 'bags' or 'bag')
+    pattern_child = r'(\d+) (\w+ \w+) (bags|bag)'
     for rule in raw_rules:
         if 'no other bags' in rule:
             continue
