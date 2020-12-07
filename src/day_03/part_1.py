@@ -1,7 +1,5 @@
 from collections import namedtuple
 
-from src.common import load_input
-
 Point = namedtuple("Point", ["x", "y"])
 
 
@@ -26,8 +24,3 @@ def solution(data):
             trees_counter += 1
         current_point = next_cell(map_length, current_point)
     return trees_counter
-
-
-if __name__ == "__main__":
-    data = load_input('input.txt')
-    print('🎉 Result is {}'.format(solution(data)))

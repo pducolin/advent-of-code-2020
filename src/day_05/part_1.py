@@ -28,16 +28,11 @@ def parse_id(raw_seat):
     return row_index * 8 + col_index
 
 
-def solution():
-    with open('input.txt') as f:
-        seats = [x for x in f.read().split('\n')]
-        max_seat_id = -1
-        for seat in seats:
-            seat_id = parse_id(seat)
-            if max_seat_id < seat_id:
-                max_seat_id = seat_id
-        print('🎉 Result is ID {}'.format(max_seat_id))
-
-
-if __name__ == "__main__":
-    solution()
+def solution(data):
+    seats = [x for x in data.split('\n')]
+    max_seat_id = -1
+    for seat in seats:
+        seat_id = parse_id(seat)
+        if max_seat_id < seat_id:
+            max_seat_id = seat_id
+    return max_seat_id

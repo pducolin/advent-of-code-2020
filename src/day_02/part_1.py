@@ -1,6 +1,3 @@
-from src.common import load_input
-
-
 def solution(data):
     counter = 0
     lines = [x for x in data.split('\n')]
@@ -12,8 +9,3 @@ def solution(data):
         if letter_in_password_count >= rule_min and letter_in_password_count <= rule_max:
             counter += 1
     return counter
-
-
-if __name__ == "__main__":
-    data = load_input('input.txt')
-    print('🎉 Result is {}'.format(solution(data)))

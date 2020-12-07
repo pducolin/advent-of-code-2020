@@ -1,8 +1,6 @@
 from collections import namedtuple
 from functools import reduce
 
-from src.common import load_input
-
 Point = namedtuple("Point", ["x", "y"])
 
 
@@ -36,8 +34,3 @@ def solution(data):
                 trees_counter[i] += 1
             current_point = next_cell(map_length, current_point, to_the_right, to_the_bottom)
     return reduce((lambda x, y: x * y), trees_counter)
-
-
-if __name__ == "__main__":
-    data = load_input('input.txt')
-    print('🎉 Result is {}'.format(solution(data)))

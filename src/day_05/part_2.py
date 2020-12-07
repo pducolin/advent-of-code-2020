@@ -32,27 +32,20 @@ def parse_id(raw_seat):
     return evaluate_id(row_index, col_index)
 
 
-def solution():
-    with open('input.txt') as f:
-        seats = [x for x in f.read().split('\n')]
-        available_seats = {x for x in range(evaluate_id(127, 7))}
-        occupied_seats = set()
-        for seat in seats:
-            seat_id = parse_id(seat)
-            available_seats.remove(seat_id)
-            occupied_seats.add(seat_id)
+def solution(data):
+    seats = [x for x in data.split('\n')]
+    available_seats = {x for x in range(evaluate_id(127, 7))}
+    occupied_seats = set()
+    for seat in seats:
+        seat_id = parse_id(seat)
+        available_seats.remove(seat_id)
+        occupied_seats.add(seat_id)
 
-        available_seats = {x for x in available_seats if x + 1 in occupied_seats and x - 1 in occupied_seats}
+    available_seats = {x for x in available_seats if x + 1 in occupied_seats and x - 1 in occupied_seats}
 
-        available_seats = [
-            {'row': x // 8, 'col': x % 8, 'id': evaluate_id(x // 8, x % 8)}
-            for x in available_seats
-            if x // 8 > 0 and x // 8 < 127
-        ]
-        print('🎉 Available seats:')
-        for seat in available_seats:
-            print('{}'.format(seat))
-
-
-if __name__ == "__main__":
-    solution()
+    available_seats = [
+        {'row': x // 8, 'col': x % 8, 'id': evaluate_id(x // 8, x % 8)}
+        for x in available_seats
+        if x // 8 > 0 and x // 8 < 127
+    ]
+    return available_seats

@@ -1,7 +1,5 @@
 import re
 
-from src.common import load_input
-
 
 def is_valid_height(value):
     unit = value[-2:]
@@ -77,8 +75,3 @@ def solution(data):
         if is_valid_passport(passport):
             counter += 1
     return counter
-
-
-if __name__ == "__main__":
-    data = load_input('input.txt')
-    print('🎉 Result is {}'.format(solution(data)))

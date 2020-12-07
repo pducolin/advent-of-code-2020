@@ -1,5 +1,3 @@
-from src.common import load_input
-
 VALID_PASSPORT_FIELDS = set(
     """byr
 iyr
@@ -25,8 +23,3 @@ def solution(data):
         if is_valid_passport(passport):
             counter += 1
     return counter
-
-
-if __name__ == "__main__":
-    data = load_input('input.txt')
-    print('🎉 Result is {}'.format(solution(data)))

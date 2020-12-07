@@ -1,6 +1,3 @@
-from src.common import load_input
-
-
 def solution_space_N(data):
     total = 2020
     # O(N)
@@ -40,8 +37,3 @@ def solution_space_const(data):
                 continue
 
             right_index -= 1
-
-
-if __name__ == "__main__":
-    data = load_input('input.txt')
-    print('🎉 Result is {}'.format(solution_space_const(data)))
