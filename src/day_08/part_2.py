@@ -3,50 +3,69 @@ from collections import namedtuple
 Command = namedtuple('Command', ['operation', 'argument'])
 
 
-class Program:
+class ProgramFixer:
     def __init__(self, data):
-        self.lines = Program._parse_program(data)
+        self.lines = [
+            {'command': line, 'swapped': False, 'executed': False} for line in ProgramFixer._parse_program(data)
+        ]
         self.next_line_index = 0
         self.accumulator = 0
-        self.executed_jumps = set()
-        self.steps = []
 
     def reset(self):
         self.next_line_index = 0
         self.accumulator = 0
-        self.executed_jumps.clear()
-        self.steps.clear()
+        for line in self.lines:
+            line['swapped'] = False
+            line['executed'] = False
+
+    def fix(self):
+        swapped_index = 0
+        while swapped_index < len(self.lines):
+            while self.lines[swapped_index]['command'].operation == 'acc':
+                swapped_index += 1
+            self.lines[swapped_index]['swapped'] = True
+            if self.run():
+                # successfully executed
+                break
+            self.reset()
+            swapped_index += 1
 
     def run(self):
         while True:
-            if not self.execute_line():
-                return False
-            if self.next_line_index >= len(self.lines):
+            self.execute_line()
+            if self.next_line_index == len(self.lines):
                 return True
+            if self.lines[self.next_line_index]['executed']:
+                return False
 
     def execute_line(self):
-        current_line = self.lines[self.next_line_index]
+        current_command = self.lines[self.next_line_index]['command']
+        is_swapped = self.lines[self.next_line_index]['swapped']
+        self.lines[self.next_line_index]['executed'] = True
+        value = int(current_command.argument)
 
-        if current_line.operation == 'acc':
-            value = int(current_line.argument)
-            self.accumulator += value
-            self.next_line_index += 1
-            self.steps.append('Add {} to acc [{}], go to {}'.format(value, self.accumulator, self.next_line_index))
-            return True
+        operation = current_command.operation
+        if is_swapped:
+            operation = ProgramFixer.swap_operation(operation)
 
-        if current_line.operation == 'jmp':
-            if self.next_line_index in self.executed_jumps:
-                return False
-            self.executed_jumps.add(self.next_line_index)
-            value = int(current_line.argument)
-            self.next_line_index += value
-            self.steps.append('Jump of {}, acc [{}], go to {}'.format(value, self.accumulator, self.next_line_index))
-            return True
+        if operation == 'acc':
+            self._accumulate(value)
 
-        if current_line.operation == 'nop':
-            self.next_line_index += 1
-            self.steps.append('Go to {}'.format(self.next_line_index))
-            return True
+        if operation == 'jmp':
+            self._jump(value)
+
+        if operation == 'nop':
+            self._nop()
+
+    def _jump(self, value):
+        self.next_line_index += value
+
+    def _accumulate(self, value):
+        self.accumulator += value
+        self.next_line_index += 1
+
+    def _nop(self):
+        self.next_line_index += 1
 
     @staticmethod
     def _parse_program(data):
@@ -63,21 +82,6 @@ class Program:
 
 
 def solution(data):
-    p = Program(data.split('\n'))
-    original_lines = p.lines
-
-    to_swap = []
-    for i in range(len(original_lines)):
-        line = original_lines[i]
-        if line.operation == 'jmp' or line.operation == 'nop':
-            to_swap.append(i)
-
-    while not p.run():
-        p.reset()
-        p.lines = original_lines.copy()
-        index_to_swap = to_swap.pop()
-        p.lines[index_to_swap] = Command(
-            Program.swap_operation(p.lines[index_to_swap].operation), p.lines[index_to_swap].argument
-        )
-
+    p = ProgramFixer(data.splitlines())
+    p.fix()
     return p.accumulator
