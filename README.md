@@ -3,11 +3,11 @@ Solutions to Advent of Code 2020
 
 ![Christmas image of a cup of hot chocolate](./image.png)
 
-I'm using this project to play with Python, [TDD](##TDD) and [Github Actions](##Github-Actions)
+I'm using this project to play with Python, [Testing](##Testing) and [Github Actions](##Github-Actions)
 
 ## Testing
 
-[pytest](https://docs.pytest.org/en/stable/) is testing library for Python. It is widely used and has some advantages compared to the built-in `unitest` (here's a [comparison between pytest and unittest](https://github.com/renzon/pytest-vs-unittest)).
+[pytest](https://docs.pytest.org/en/stable/) is a testing library for Python. It is widely used and has some advantages compared to the built-in `unitest` (here's a [comparison between pytest and unittest](https://github.com/renzon/pytest-vs-unittest)).
 
 It has a powerfull test discovery, detecting test by default in functions beginning with `test` and in Python files beginning with `test_` or ending with `_test`.
 
@@ -39,7 +39,7 @@ When executing `pytest` from root folder, it will detect the following files sta
 
 Thanks to `__init__py` in both `day_01` and `day_02` folders we can use test files with the same name, as `__init__py` declares a [directory as a Python package](https://docs.python.org/3/reference/import.html#regular-packages).
 
-To be able to load local code there is an `__init__.py` also in `tests` and in `src`.
+To be able to import local code there is an `__init__.py` also in `tests` and in `src`.
 
 Now `test_part_1.py` can load code from all folders under `src`, using `.` instead of `/`
 
