@@ -19,12 +19,9 @@ def execute_program(instructions):
         value_2 = instructions[instructions[offset + 2]]
         target_index = instructions[offset + 3]
         if current_instruction == 1:
-            print('{} + {} -> {}'.format(value_1, value_2, target_index))
             instructions[target_index] = value_1 + value_2
         else:
-            print('{} * {} -> {}'.format(value_1, value_2, target_index))
             instructions[target_index] = value_1 * value_2
-        print(','.join([str(x) for x in instructions]))
 
         offset += 4
 
