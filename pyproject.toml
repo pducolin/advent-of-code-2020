@@ -4,6 +4,7 @@ exclude = '''
 /(
     \.git
   | \.pytest_cache
+  | template
 )/
   |
 # Files
