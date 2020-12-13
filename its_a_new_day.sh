@@ -7,7 +7,7 @@ if [[ "$TODAY" > "$XMAS" ]]; then
 else
     echo "🎄 It's AoC day $TODAY, get ready to code 👩‍💻..."
 fi
-if [["$TODAY" == "$XMAS"]]; then
+if [[ "$TODAY" == "$XMAS" ]]; then
   # uninstall daily file creation from crontab
   # 1. list contentof crontab
   # 2. grep all lines not containing 'its_a_new_day' (-v inverts the match)
@@ -19,7 +19,7 @@ if [["$TODAY" == "$XMAS"]]; then
   rm tmp_crontab 
   echo "🎄 Merry Christmas! 🎅"
 fi
-# create code folder and placeholder files
+#create code folder and placeholder files
 if [ -d src/day_"$TODAY" ]; then
   echo "🎄 Day $TODAY already created 😲"
   exit 1
