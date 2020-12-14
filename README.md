@@ -85,6 +85,6 @@ This opens my user's `crontab` file in `vim`
 ```
 I added my entry to execute my script daily between the 1st and the 25th of December at 8 am
 ```bash
-0 8 1-25 12 * <path_to_my_local_repo>/its_a_new_day.sh
+* * 1-25 12 * <path_to_my_local_repo>/its_a_new_day.sh >> <path_to_my_local_repo>/its_a_new_day.log 2>&1
 ```
 

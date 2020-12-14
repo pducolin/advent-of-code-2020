@@ -37,3 +37,7 @@ def solution_space_const(data):
                 continue
 
             right_index -= 1
+
+
+def solution(data):
+    return solution_space_const(data)

@@ -9,7 +9,6 @@ def find_sum_range(sum_value, numbers):
     to_index = 1
     while to_index < len(numbers):
         current_sum = sum(numbers[from_index:to_index])
-        print('Sum from {} to {} is {}'.format(from_index, to_index, current_sum))
         if current_sum == sum_value:
             return from_index, to_index
         if current_sum > sum_value and from_index < to_index:

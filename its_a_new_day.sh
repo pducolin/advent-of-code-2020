@@ -27,7 +27,6 @@ fi
 mkdir -p src/day_"$TODAY";
 touch src/day_"$TODAY"/input.txt;
 touch src/day_"$TODAY"/README.md;
-cp template/main.py src/day_"$TODAY"/main.py;
 cp template/part_x.py src/day_"$TODAY"/part_1.py;
 cp template/part_x.py src/day_"$TODAY"/part_2.py;
 # create test folder and placeholder files
