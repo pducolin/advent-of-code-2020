@@ -83,8 +83,9 @@ This opens my user's `crontab` file in `vim`
 # │ │ │ │ │
 # * * * * * <command to execute>
 ```
-I added my entry to execute my script daily between the 1st and the 25th of December at 8 am
+I used [crontab guru](https://crontab.guru/) to format my `crontab` entry
 ```bash
-* * 1-25 12 * <path_to_my_local_repo>/its_a_new_day.sh >> <path_to_my_local_repo>/its_a_new_day.log 2>&1
+0/10 * 1-25 12 * <path_to_my_local_repo>/its_a_new_day.sh >> <path_to_my_local_repo>/its_a_new_day.log 2>&1
 ```
+I first tried to run it daily at 8am, but `crontab` doesn't run while the machine is asleep, so I set it up to run every 10 minutes. To be improved using `launchd` 
 
