@@ -1,6 +1,6 @@
 #!/bin/bash
 TODAY=$(date +"%d");
-XMAS=$(date -d '20201225' +"%d");
+XMAS=25;
 if [[ "$TODAY" > "$XMAS" ]]; then
     echo "Xmas is over, so is AoC"
     exit 1
