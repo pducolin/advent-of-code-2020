@@ -1,4 +1,18 @@
+from dataclasses import dataclass
+
 DEBUG = False
+
+
+@dataclass
+class Operator:
+    priority: int
+    executor: callable
+
+
+OPERATORS = {
+    '+': Operator(2, lambda a, b: a + b),
+    '*': Operator(1, lambda a, b: a * b),
+}
 
 
 def dbg_print(s):
@@ -6,81 +20,74 @@ def dbg_print(s):
         print(s)
 
 
-def parse_number(expression):
+def parse_lexemes(expression):
+    expression = expression.replace(' ', '')
+    lexemes = []
+    index = 0
+    while index < len(expression):
+        ch = expression[index]
+        if ch.isdigit():
+            number, index = parse_number(expression, index)
+            lexemes.append(number)
+            continue
+        elif ch in OPERATORS or ch in {'(', ')'}:
+            lexemes.append(ch)
+        index += 1
+    return lexemes
+
+
+def evaluate(operation, a, b):
+    return operation.executor(a, b)
+
+
+def execute_operations(ops, args, criteria):
+    dbg_print(f'Execute operations, ops: {ops}, args: {args}')
+    while len(ops) > 0 and criteria():
+        b = args.pop()
+        a = args.pop()
+        op = ops.pop()
+        dbg_print(f'Execute operation: {a} {op} {b}')
+        args.append(evaluate(OPERATORS[op], a, b))
+    dbg_print(f'Args: {args}')
+
+
+def parse_number(expression, index):
     number_str = ''
-    dbg_print(f'Parsing number in {expression}')
-    while len(expression) > 0 and expression[0].isdigit():
-        number_str += expression[0]
-        expression = expression[1:] if len(expression) > 1 else ''
+    while index < len(expression) and expression[index].isdigit():
+        number_str += expression[index]
+        index += 1
 
-    dbg_print(f'Parsed number {number_str}, expression: {expression}')
-    return int(number_str), expression
-
-
-def parse_group(expression):
-    if expression[0] != '(':
-        raise Exception('Invalid group start: {}'.format(expression[0]))
-    dbg_print(f'Parsing group in {expression}')
-    expression = expression[1:] if len(expression) > 1 else ''
-    group = ''
-    while len(expression) > 0:
-        ch = expression[0]
-        if ch.isdigit() or ch == '+' or ch == '*':
-            group += ch
-            expression = expression[1:] if len(expression) > 1 else ''
-            continue
-        if ch == '(':
-            subgroup, expression = parse_group(expression)
-            value = evaluate_expression(subgroup)
-            group += str(value)
-            continue
-        if ch == ')':
-            expression = expression[1:] if len(expression) > 1 else ''
-            dbg_print(f'Parsed group {group}, expression: {expression}')
-            return group, expression
-    raise Exception('No closure for group')
+    dbg_print(f'Parsed number {number_str}')
+    return int(number_str), index
 
 
 def evaluate_expression(expression):
-    result = None
-    current_operation = None
-    # remove all spaces
-    expression = expression.replace(' ', '')
-    dbg_print(f"Evaluate expression {expression}")
-    while len(expression) > 0:
-        ch = expression[0]
-        if ch == '+':
-            current_operation = ch
-            expression = expression[1:] if len(expression) > 1 else ''
+    dbg_print('expression: {}'.format(expression))
+    lexemes = parse_lexemes(expression)
+    ops = []
+    args = []
+    dbg_print('lexemes: {}'.format(''.join([str(x) for x in lexemes])))
+    for lex in lexemes:
+        if isinstance(lex, int):
+            dbg_print(f'Appending {str(lex)} to args')
+            args.append(lex)
             continue
-        if ch == '*':
-            # first solve all sums
-            if '+' in expression:
-                value = evaluate_expression(expression[1:])
-                expression = str(result) + '*' + str(value)
-                continue
-            current_operation = ch
-            expression = expression[1:] if len(expression) > 1 else ''
+        if lex == '(':
+            dbg_print(f'Appending {lex} to ops')
+            ops.append(lex)
             continue
-        value = None
-        if ch == '(':
-            group, expression = parse_group(expression)
-            value = evaluate_expression(group)
-        elif ch.isdigit():
-            value, expression = parse_number(expression)
-
-        if current_operation == '+':
-            result += value
-            current_operation = None
-        elif current_operation == '*':
-            result = result * value
-            current_operation = None
-        else:
-            result = value
-        continue
-
-    dbg_print(f'Expression result: {result}')
-    return result
+        if lex == ')':
+            execute_operations(ops, args, lambda: ops[-1] != '(')
+            ops.pop()
+            continue
+        if lex in OPERATORS:
+            priority = OPERATORS[lex].priority
+            execute_operations(ops, args, lambda: ops[-1] != '(' and OPERATORS[ops[-1]].priority >= priority)
+            dbg_print(f'Appending {lex} to ops')
+            ops.append(lex)
+    execute_operations(ops, args, lambda: True)
+    dbg_print(f'Args: {args}')
+    return args[-1] if len(args) == 1 else None
 
 
 def solve_expression_list(expression_list):
