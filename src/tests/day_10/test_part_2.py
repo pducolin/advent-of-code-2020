@@ -54,6 +54,18 @@ EXAMPLE_3 = """28
 10
 3"""
 
+EXAMPLE_4 = """1
+2
+3
+4
+6
+7"""
+
+EXAMPLE_5 = """1
+2
+3
+5"""
+
 
 def test_solution_1():
     assert solution(EXAMPLE_1) == 8
@@ -65,3 +77,11 @@ def test_solution_2():
 
 def test_solution_3():
     assert solution(EXAMPLE_3) == 19208
+
+
+def test_solution_4():
+    assert solution(EXAMPLE_4) == 18
+
+
+def test_solution_5():
+    assert solution(EXAMPLE_5) == 6
