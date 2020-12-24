@@ -1,25 +1,34 @@
-def solution(data):
-    numbers = [int(x) for x in data.splitlines()]
-    numbers.append(0)
-    numbers.sort()
-    counters = {1: 0, 2: 0, 3: 0}
-    groups_counters = []
-    previous_delta = 0
-    print('Numbers: {}'.format(numbers))
-    for i in range(len(numbers) - 1):
-        delta_from_next = numbers[i + 1] - numbers[i]
-        counters[delta_from_next] += 1
-        print('Current number[{}]: {}, delta from next: {}'.format(i, numbers[i], delta_from_next))
-        if delta_from_next < 3:
-            if previous_delta != delta_from_next:
-                groups_counters.append(1)
-            groups_counters[-1] += 1
-        previous_delta = delta_from_next
+DEBUG = True
 
-    print('groups_counter {}'.format(groups_counters))
-    counters[3] += 1
+# ======= DISCLAIMER =======
+# Works only for adpaters with distance of 1 or 3
+
+
+def dbg_print(s):
+    if DEBUG:
+        print(s)
+
+
+def solution(data):
+    adapters = [int(x) for x in data.splitlines()]
+    adapters.append(0)
+    adapters.sort()
+    adapters.append(adapters[-1] + 3)
+    group_of_elements_split_by_distance = {1: [], 2: []}
+    # 0-1-2-4-5-7
+    current_distance = 3
+    dbg_print('Adpaters: {}'.format(adapters))
+    for i in range(1, len(adapters)):
+        delta_from_previous = adapters[i] - adapters[i - 1]
+        dbg_print(f'Current number[{i}]: {adapters[i]}, delta from previous: {delta_from_previous}')
+        if delta_from_previous < 3:
+            if delta_from_previous != current_distance:
+                group_of_elements_split_by_distance[delta_from_previous].append(1)
+            group_of_elements_split_by_distance[delta_from_previous][-1] += 1
+        current_distance = delta_from_previous
+    dbg_print('groups_counter {}'.format(group_of_elements_split_by_distance))
     result = 1
-    for counter in groups_counters:
+    for counter in group_of_elements_split_by_distance[1]:
         if counter < 3:
             continue
 
