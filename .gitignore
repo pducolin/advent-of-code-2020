@@ -129,3 +129,4 @@ dmypy.json
 .pyre/
 .vscode/settings.json
 .mutmut-cache
+src/day_10/part_2.py

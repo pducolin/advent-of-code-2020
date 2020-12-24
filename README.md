@@ -47,6 +47,26 @@ Now `test_part_1.py` can load code from all folders under `src`, using `.` inste
 from src.day_01.part_1 import solution
 ```
 
+### Continuous testing
+
+To gain efficiency it is possible to run `pytest` on code change and only on impacted tests. `pytest` has two plugins that combined together provide this feature, [pytest-testmon](https://pypi.org/project/pytest-testmon/) and [pytest-watch](https://github.com/joeyespo/pytest-watch). 
+
+`pytest-watch` is a CLI tool that runs `pytest`, and re-run it when a file changes. 
+
+`pytest-testmon` uses [coverage.py](https://coverage.readthedocs.io/en/coverage-5.3.1/) to determine which tests are impacted by changes in code.
+
+Install these plugin using `pip`
+
+```bash
+pip install pytest-watch pytest-testmon
+```
+
+And run `pytest-watcher` using `pytest --testmon`
+
+```bash
+ptw --runner "pytest --testmon"
+```
+
 ## Github Actions
 
 Github built-in CI/CD is free for public repositories since Aug, 2019. It has many workflow templates, including one for Python applications. To add it and start running linting and tests on Github, click on Actions -> New Workflow -> Python Applications. This will create a new configuration `yaml` under `.github/workflows`, that by defaults execute the actions at every push on `main` branch 
@@ -62,30 +82,3 @@ Github built-in CI/CD is free for public repositories since Aug, 2019. It has ma
 ```bash
 black .
 ```
-
-## cron jobs
-
-[cron](https://en.wikipedia.org/wiki/Cron) is a Unix-based job scheduler, installed by default on OSX. I used it to create placeholder files daily during Advent of Code. I added [a bash script](./its_a_new_day.sh) that creates folders and empty files following my folder structure. As I'm lazy, I added it to my `crontab` so that they are created every morning.
-To edit the `crontab` I executed the following command:
-```bash
-crontab -e
-```
-This opens my user's `crontab` file in `vim`
-`crontab` entries must respect the following format
-```bash
-# ┌───────────── minute (0 - 59)
-# │ ┌───────────── hour (0 - 23)
-# │ │ ┌───────────── day of the month (1 - 31)
-# │ │ │ ┌───────────── month (1 - 12)
-# │ │ │ │ ┌───────────── day of the week (0 - 6) (Sunday to Saturday;
-# │ │ │ │ │                                   7 is also Sunday on some systems)
-# │ │ │ │ │
-# │ │ │ │ │
-# * * * * * <command to execute>
-```
-I used [crontab guru](https://crontab.guru/) to format my `crontab` entry
-```bash
-0/10 * 1-25 12 * <path_to_my_local_repo>/its_a_new_day.sh >> <path_to_my_local_repo>/its_a_new_day.log 2>&1
-```
-I first tried to run it daily at 8am, but `crontab` doesn't run while the machine is asleep, so I set it up to run every 10 minutes. To be improved using `launchd` 
-
