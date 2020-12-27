@@ -3,7 +3,16 @@ Solutions to Advent of Code 2020
 
 ![Christmas image of a cup of hot chocolate](./image.png)
 
-I'm using this project to play with Python, [Testing](##Testing), [Github Actions](##Github-Actions) and [cron jobs](##cron-jobs)
+I'm using this project to play with Python, [Testing](##Testing) and [Github Actions](##Github-Actions)
+
+* [Testing](#Testing)
+  - [Continuous testing](#Continuous-testing)
+* [Github Actions](##Github-Actions) 
+
+Here's a collection of resources and tips from 2020 edition
+* Parsing mathematical expressions with [Dijkstra's](https://en.m.wikipedia.org/wiki/Edsger_W._Dijkstra) [Shunting-yard algorithm](https://en.m.wikipedia.org/wiki/Shunting-yard_algorithm) - from day 18
+* [Hexagonal grids](https://www.redblobgames.com/grids/hexagons/) - from day 24
+
 
 ## Testing
 
