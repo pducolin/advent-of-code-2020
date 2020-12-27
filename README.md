@@ -7,12 +7,12 @@ I'm using this project to play with Python, [Testing](##Testing) and [Github Act
 
 * [Testing](#Testing)
   - [Continuous testing](#Continuous-testing)
-* [Github Actions](##Github-Actions) 
-
-Here's a collection of resources and tips from 2020 edition
-* Parsing mathematical expressions with [Dijkstra's](https://en.m.wikipedia.org/wiki/Edsger_W._Dijkstra) [Shunting-yard algorithm](https://en.m.wikipedia.org/wiki/Shunting-yard_algorithm) - from day 18
-* [Hexagonal grids](https://www.redblobgames.com/grids/hexagons/) - from day 24
-
+* [Github Actions](#Github-Actions) 
+  - [flake8](#flake8)
+  - [black](black)
+* [Resources and learnings](#Resources-and-learnings)
+  - [Resources](#Resources)
+  - [Python learnings](#Python-learnings)
 
 ## Testing
 
@@ -80,14 +80,69 @@ ptw --runner "pytest --testmon"
 
 Github built-in CI/CD is free for public repositories since Aug, 2019. It has many workflow templates, including one for Python applications. To add it and start running linting and tests on Github, click on Actions -> New Workflow -> Python Applications. This will create a new configuration `yaml` under `.github/workflows`, that by defaults execute the actions at every push on `main` branch 
 
-## flake8
+### flake8
 
 [Flake8](https://flake8.pycqa.org/en/latest/) is a widely used Python linter. It supports storing its [configuration](./.flake8) in the root directory in a `.flake8` file, within a `[flake8]` section.
 
-## black
+### black
 
 [Black](https://black.readthedocs.io/en/stable/) is a widely used Python formatter. It supports storing its [configuration](./pyproject.toml) in a `TOML` file within a `[tool.black]` section. It can be used to format code on save, or to format all files from the command line:
 
 ```bash
 black .
 ```
+
+## Resources and learnings
+
+Here's a collection of resources and learnings from 2020 edition
+
+### Resources
+
+* Parsing mathematical expressions with [Dijkstra's](https://en.m.wikipedia.org/wiki/Edsger_W._Dijkstra) [Shunting-yard algorithm](https://en.m.wikipedia.org/wiki/Shunting-yard_algorithm) - from day 18
+* [Hexagonal grids](https://www.redblobgames.com/grids/hexagons/) - from day 24
+
+### Python learnings
+
+#### `re.match` vs `re.search` vs `re.fullmatch`
+
+`re.match` looks for the pattern at the beginning of the string, or at a specific position `pos`
+
+```python
+import re
+
+a_string = 'something whatever'
+pattern_at_the_beginning = 'some'
+pattern_in_the_middle = 'g what'
+print re.match(pattern_at_the_beginning, a_string) # matches
+print re.match(pattern_in_the_middle, a_string) # doesn't match
+# using a specific position where to look for the pattern
+print re.match(pattern_in_the_middle, a_string, pos=8) # matches
+```
+
+`re.search` scans through the string looking for a position where the pattern is matched.
+
+```python
+import re
+
+a_string = 'something whatever'
+pattern_at_the_beginning = 'some'
+pattern_in_the_middle = 'g what'
+print re.search(pattern_at_the_beginning, a_string) # matches
+print re.search(pattern_in_the_middle, a_string) # matches
+```
+
+`re.fullmatch` returns a match object iff the whole string matches the regular expression pattern
+
+```python
+import re
+
+a_string = 'something whatever'
+pattern_at_the_beginning = 'some'
+pattern_in_the_middle = 'g what'
+print re.fullmatch(pattern_at_the_beginning, a_string) # doesn't match
+print re.fullmatch(pattern_in_the_middle, a_string) # doesn't match
+pattern_full = '\w+ \w+' # 1 or more word characters + space + 1 or more word characters
+print re.fullmatch(pattern_full, a_string) # matches
+```
+
+More on `match` vs `search` in [Python's official documentation](https://docs.python.org/2/library/re.html#search-vs-match)
