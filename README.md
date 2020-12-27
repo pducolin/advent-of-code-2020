@@ -10,7 +10,7 @@ I'm using this project to play with Python, [Testing](##Testing) and [Github Act
 * [Github Actions](#Github-Actions) 
   - [flake8](#flake8)
   - [black](black)
-* [Resources and learnings](#Resources-and-learnings)
+* [TIL](#TIL)
   - [Resources](#Resources)
   - [Python learnings](#Python-learnings)
 
@@ -92,7 +92,7 @@ Github built-in CI/CD is free for public repositories since Aug, 2019. It has ma
 black .
 ```
 
-## Resources and learnings
+## TIL
 
 Here's a collection of resources and learnings from 2020 edition
 
