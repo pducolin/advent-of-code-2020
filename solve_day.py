@@ -11,14 +11,15 @@ def load_input(filename):
 
 
 @click.command()
+@click.option('--year', default=date.today().year, help='Year to execute.')
 @click.option('--day', default=date.today().day, help='Day to execute.')
-def execute_day(day):
+def execute_day(year,day):
     """Execute Advent of code solution for a specific day."""
-    part_1 = import_module('src.day_{:02d}.part_1'.format(day))
-    part_2 = import_module('src.day_{:02d}.part_2'.format(day))
-    data = load_input('src/day_{:02d}/input.txt'.format(day))
-    print('🎉 Result for day {}, part 1 is {}'.format(day, part_1.solution(data)))
-    print('🎉 Result for day {}, part 2 is {}'.format(day, part_2.solution(data)))
+    part_1 = import_module('src.y{:04d}.day_{:02d}.part_1'.format(year,day))
+    part_2 = import_module('src.y{:04d}.day_{:02d}.part_2'.format(year,day))
+    data = load_input('src/y{:04d}/day_{:02d}/input.txt'.format(year, day))
+    print('🎉 Result for year {}, day {}, part 1 is {}'.format(year, day, part_1.solution(data)))
+    print('🎉 Result for year {}, day {}, part 2 is {}'.format(year, day, part_2.solution(data)))
 
 
 if __name__ == '__main__':
